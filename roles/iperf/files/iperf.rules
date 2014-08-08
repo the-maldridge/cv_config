@@ -1,0 +1,5 @@
+# Firewall configuration written by phy1729
+*filter
+-A INPUT -p tcp --dport 5001 -j ACCEPT
+-A INPUT -p udp --dport 5001 -j ACCEPT
+COMMIT

@@ -1,0 +1,7 @@
+---
+- name: Configure firewall for iperf
+  copy: src=iperf.rules dest=/etc/iptables.d/iperf.rules owner=root group=root mode=0644
+  notify:
+  - iptables
+- name: Install iperf
+  apt: pkg=iperf state=present
