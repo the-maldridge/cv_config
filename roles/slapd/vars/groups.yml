@@ -37,3 +37,8 @@ slapd_groups:
   members:
   - Siosilvar
   - Fhqwhgads
+
+- name: Print Admins
+  gidNumber: 1934
+  members:
+  - Fhqwhgads
