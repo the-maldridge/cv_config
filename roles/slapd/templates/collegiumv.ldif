@@ -41,6 +41,7 @@ objectClass: groupOfNames
 objectClass: posixGroup
 cn: {{ group.name }}
 gidNumber: {{ group.gidNumber }}
+exact: member
 {% for member in group.members %}
 member: uid={{ member }},ou=People,dc=collegiumv,dc=org
 {% endfor %}

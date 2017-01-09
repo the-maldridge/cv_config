@@ -4,7 +4,10 @@ cn: config
 olcRootDSE: /etc/openldap/slapd.d/rootDSE.ldif
 olcGentleHUP: TRUE
 olcIdleTimeout: 60
+exact: olcAuthRegexp
 olcAuthzRegexp: {0}uid=([^,]*)(/[^,]*)?(,cn=collegiumv.org)?,cn=gss-spnego,cn=auth uid=$1,ou=People,dc=collegiumv,dc=org
+olcAuthzRegexp: {1}"uid=host/([^/]*).collegiumv.org,(cn=collegiumv.org)?,cn=gss-spnego,cn=auth" "cn=$1,ou=hosts,dc=collegiumv,dc=org"
+exact: olcServerID
 {% if groups['dc']|length > 1 %}
 {% for dc in groups['dc'] %}
 olcServerID: {{ loop.index-1 }} ldap://{{ hostvars[dc]['ansible_fqdn'] }}
@@ -53,11 +56,13 @@ olcDbIndex: krbPrincipalName eq,sub
 {% if groups['dc']|length > 1 %}
 olcDbIndex: objectclass,entryCSN,entryUUID eq
 olcMirrorMode: TRUE
+exact: olcSyncRepl
 {% for dc in groups['dc'] %}
 olcSyncRepl: {{ '{' }}{{ loop.index-1 }}{{ '}' }}rid=01{{ loop.index-1 }} provider="ldap://{{ hostvars[dc]['ansible_fqdn'] }}" binddn="cn=config" bindmethod=simple credentials="{{ slapd_olcRootPW }}" searchbase="dc=collegiumv,dc=org" type=refreshAndPersist retry="5 5 120 +" timeout=3
 {% endfor %}
 {% endif %}
 # A few entries use userPassword
+exact: exact
 olcAccess: {0}to attrs=userPassword
   by * auth
 olcAccess: {1}to dn.subtree="cn=krbContainer,dc=collegiumv,dc=org"

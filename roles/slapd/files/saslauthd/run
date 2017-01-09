@@ -1,0 +1,8 @@
+#!/bin/sh
+[ -r ./conf ] && . ./conf
+: "${SASLAUTHDMECH:=Kerberos5}"
+if [ ! -d /run/openldap ]; then
+        mkdir /run/saslauthd
+fi
+exec 2>&1
+exec saslauthd -a "$SASLAUTHDMECH" -d /run/saslauthd/mux

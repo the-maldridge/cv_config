@@ -1,18 +1,32 @@
 ---
 - name: Install GSSAPI
-  xbps: name=cyrus-sasl-modules-gssapi state=present
+  xbps:
+    name: cyrus-sasl-modules-gssapi
+    state: present
 
 - name: Check for a keyfile
-  stat: path=/etc/krb5.keytab
+  stat:
+    path: /etc/krb5.keytab
   register: keytab
 
 - name: Provision principle
-  command: kadmin.local -q "addprinc -randkey ldap/{{ ansible_fqdn }}"
+  command: kadmin.local -q "addprinc -randkey {{ item }}/{{ ansible_fqdn }}"
+  with_items:
+    - host
+    - ldap
   when: keytab.stat.exists == False
 
 - name: Generate KeyTab
-  command: kadmin.local -q "ktadd -k /etc/krb5.keytab ldap/{{ ansible_fqdn }}"
+  command: kadmin.local -q "ktadd -k /etc/krb5.keytab {{ item }}/{{ ansible_fqdn }}"
+  with_items:
+    - host
+    - ldap
   when: keytab.stat.exists == False
 
 - name: Change ownership of keytab
-  file: path=/etc/krb5.keytab owner=ldap group=ldap mode=0400 state=file
+  file:
+    path: /etc/krb5.keytab
+    owner: ldap
+    group: ldap
+    mode: 0400
+    state: file

@@ -3,19 +3,25 @@
   include_vars: groups.yml
 
 - name: Configure firewall
-  template: src=slapd.rules dest=/etc/iptables.d/slapd.rules owner=root group=root mode=0640
+  template:
+    src: slapd.rules
+    dest: /etc/iptables.d/slapd.rules
+    owner: root
+    group: root
+    mode: 0640
   notify:
     - iptables
 
 - name: Install slapd
-  xbps: pkg={{ item }} state=present
-  with_items:
-    - openldap
-    - libsasl
-    - cyrus-sasl
-    - cyrus-sasl-modules
-    - cyrus-sasl-modules-gssapi
-    - cyrus-sasl-modules-ldap
+  xbps:
+    pkg:
+      - openldap
+      - libsasl
+      - cyrus-sasl
+      - cyrus-sasl-modules
+      - cyrus-sasl-modules-gssapi
+      - cyrus-sasl-modules-ldap
+    state: present
   register: slapd
 
 - name: Bootstrap slapd
@@ -23,27 +29,70 @@
   when: init
 
 - name: Enable service
-  file: src=/etc/sv/slapd dest=/var/service/slapd state=link owner=root group=root
+  file:
+    src: /etc/sv/slapd
+    dest: /var/service/slapd
+    state: link
+    owner: root
+    group: root
 
 - name: Wait for ldap to start up
-  wait_for: host=127.0.0.1 port=389 state=started
+  wait_for:
+    host: 127.0.0.1
+    port: 389
+    state: started
 
 - name: Install python-ldap
-  xbps: pkg=python-ldap state=present
-
-- name: Copy LDIF files
-  template: src={{ item }}.ldif dest=/tmp/{{ item }}.ldif owner=ldap group=root mode=0600
-  with_items: "{{ LDIFfiles }}"
+  xbps:
+    pkg: python-ldap
+    state: present
 
 - name: Add LDIF to database
-  ldap: src=/tmp/{{ item }}.ldif bind_dn="cn=config" base64_passwd="{{ slapd_olcRootPW | b64encode }}"
-  when: inventory_hostname == groups['dc'][0]
+  ldap_template:
+    src: "{{ item }}.ldif"
+    bind_dn: "cn=config"
+    bind_passwd: "{{ slapd_olcRootPW | b64encode }}"
+    base64_passwd: True
   with_items: "{{ LDIFfiles }}"
+  when: inventory_hostname == groups['dc'][0]
 
 - name: Add sync to database
-  ldap: src=/tmp/sync.ldif bind_dn="cn=config" base64_passwd="{{ slapd_olcRootPW | b64encode }}"
+  ldap_template:
+    src: /tmp/sync.ldif
+    bind_dn: "cn=config"
+    bind_passwd: "{{ slapd_olcRootPW | b64encode }}"
+    base64_passwd: True
   when: inventory_hostname != groups['dc'][0]
 
-- name: Delete LDIF files
-  file: path=/tmp/{{ item }}.ldif state=absent
-  with_items: "{{ LDIFfiles }}"
+- name: Add sasl configuration
+  copy:
+    src: slapd.conf
+    dest: /usr/lib/sasl2/slapd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: slapd
+
+- name: Create service directory
+  file:
+    path: /etc/sv/saslauthd
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy saslauthd service
+  copy:
+    src: saslauthd/run
+    dest: /etc/sv/saslauthd/run
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Enable saslauthd service
+  file:
+    src: /etc/sv/saslauthd
+    dest: /var/service/saslauthd
+    state: link
+    owner: root
+    group: root
