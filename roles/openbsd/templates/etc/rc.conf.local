@@ -1,4 +1,4 @@
-dhcpd_flags="-Y {{ peer_internal_ip }} -y {{ internal_ip }} em1"
+dhcpd_flags="-Y {{ peer_internal_ip }} -y {{ internal_ip }} -A baddhcp -C activedhcp -L activedhcp em1"
 nsd_flags=""
 ntpd_flags=""
 unbound_flags=""
