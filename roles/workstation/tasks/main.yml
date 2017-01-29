@@ -151,7 +151,7 @@
     - lightdm-setup
     - lightdm-cleanup
 
-- name: Make Various graphical services use system-auth
+- name: Make various services use system-auth
   file:
     src: /etc/pam.d/system-auth
     dest: /etc/pam.d/{{ item }}
@@ -161,6 +161,7 @@
     - lightdm
     - cinnamon-screensaver
     - cinnamon-desktop
+    - su
 
 - name: Make xbps ignore the system-auth links
   lineinfile:
@@ -172,6 +173,7 @@
     - lightdm
     - cinnamon-screensaver
     - cinnamon-desktop
+    - su
 
 - name: Assures that app-default exists
   file:
