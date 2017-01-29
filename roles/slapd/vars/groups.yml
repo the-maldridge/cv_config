@@ -22,7 +22,6 @@ slapd_groups:
     - sheila.kelly
     - vbrunell
     - Wendik
-    - Fladagus
 
 - name: Realm Admins
   gidNumber: 1337
@@ -33,8 +32,8 @@ slapd_groups:
 - name: Local Admins
   gidNumber: 9271
   members:
-    - Siosilvar
     - Fhqwhgads
+    - dangerontheranger
 
 - name: Server Admins
   gidNumber: 1336
@@ -62,3 +61,5 @@ slapd_groups:
   gidNumber: 1345
   members:
     - kusoTTK
+    - Fhqwhgads
+    - dangerontheranger
