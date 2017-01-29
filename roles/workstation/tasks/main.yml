@@ -136,6 +136,7 @@
       - thunar-archive-plugin
       - unzip
       - xarchiver
+      - zip
     state: present
     
 - name: Copy lightdm scripts
