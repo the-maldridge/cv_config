@@ -49,3 +49,6 @@
 [submodule "roles/slapd/ansible_ldap"]
 	path = roles/slapd/ansible_ldap
 	url = https://github.com/dinoocch/ansible_ldap.git
+[submodule "roles/acmetool"]
+	path = roles/acmetool
+	url = git@github.com:void-ansible-roles/acmetool.git

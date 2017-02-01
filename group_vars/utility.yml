@@ -3,3 +3,13 @@ jekyll_source_url: https://github.com/collegiumv/cv_jekyll.git
 jekyll_site_name: collegiumv
 jekyll_site_url: collegiumv.org
 jekyll_site_path: /var/www/home
+
+acmetool:
+  sites:
+    - site: constellation.collegiumv.org
+      names:
+        - constellation.collegiumv.org
+  hostmaster_email: cvadmins@utdallas.edu
+
+constellation_certificate_path: /var/lib/acme/live/constellation.collegiumv.org/fullchain
+constellation_keyfile_path: /var/lib/acme/live/constellation.collegiumv.org/privkey

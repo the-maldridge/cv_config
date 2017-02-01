@@ -9,6 +9,7 @@
     - core-daemons
     - sshd
     - inspircd
+    - acmetool
     - account_site
     - doc_site
     - irc_site
@@ -16,6 +17,7 @@
     - pasta_site
     - preseed_site
     - welcome_site
+    - constellation
     - tftp
     - void-mirror
     - ldap-web-api

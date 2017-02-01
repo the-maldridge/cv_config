@@ -3,11 +3,13 @@
 SECRETS_DIR = secret
 
 SECRET_TARGETS = ${PLAIN_SECRETS} \
+	constellation_cert \
 	inspircd_cert \
 	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers \
 	paper_cert
 
 PLAIN_SECRETS = account_salt \
+	constellation_dbpassword \
 	inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass \
 	inspircd_modules_cloak_key \
 	krb_db_enc_pass kdcAdmin_pass \
@@ -85,6 +87,9 @@ certreq:
 	openssl req -new -config ${role}_cert.conf -key ${SECRETS_DIR}/${role}_key.pem -out ${SECRETS_DIR}/${role}_csr.pem
 	rm ${role}_cert.conf
 	@tput setaf 1 0 0 && echo "Follow the steps at https://www.utdallas.edu/infosecurity/DigitalCertificates_SSL.html and put the resulting key at ${SECRETS_DIR}/${role}_cert.pem" && tput sgr0
+
+constellation_cert:
+	${MAKE} role=constellation fqdn=constellation.collegiumv.org certreq
 
 inspircd_cert:
 	${MAKE} role=inspircd fqdn=irc.collegiumv.org certreq
