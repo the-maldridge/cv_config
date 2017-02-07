@@ -8,3 +8,4 @@ altServer: ldap://{{ hostvars[dc]['ansible_fqdn'] }}
 {% endfor %}
 namingContexts: dc=collegiumv,dc=org
 supportedSASLMechanisms: GSSAPI
+supportedSASLMechanisms: PLAIN
