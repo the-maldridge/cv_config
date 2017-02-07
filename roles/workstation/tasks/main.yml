@@ -109,6 +109,7 @@
       - keepassx2
       - mlocate
       - mosh
+      - msttcorefonts
       - redshift
       - redshift-gtk
       - rxvt-unicode
