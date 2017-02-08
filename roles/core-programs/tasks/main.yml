@@ -15,5 +15,6 @@
     - cyrus-sasl-modules-gssapi
     - dialog
     - htop
+    - ncurses-term
     - tmux
     - zsh
