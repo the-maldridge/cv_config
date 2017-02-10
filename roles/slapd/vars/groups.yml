@@ -63,3 +63,12 @@ slapd_groups:
     - kusoTTK
     - Fhqwhgads
     - dangerontheranger
+
+- name: Honors College Staff
+  gidNumber: 1350
+  members:
+    - Wendik
+    - harpham
+    - pxm166330
+    - sheila.kelly
+    - vbrunell
