@@ -44,6 +44,7 @@
       - openjdk
       - R
       - racket
+      - ruby-devel
       - spim
       - rust
       - cargo
