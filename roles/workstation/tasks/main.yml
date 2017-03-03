@@ -113,6 +113,7 @@
       - mlocate
       - mosh
       - msttcorefonts
+      - ngspice
       - redshift
       - redshift-gtk
       - rxvt-unicode
