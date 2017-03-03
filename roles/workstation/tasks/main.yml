@@ -97,7 +97,7 @@
       - iscan-data
       - iscan-plugin-gt-s650
     state: present
-    
+
 - name: Install additional misc. programs
   xbps: 
     pkg:
@@ -132,7 +132,7 @@
       - xsel
       - zsh
     state: present
-    
+
 - name: Install archive management software
   xbps:
     pkg:
@@ -143,7 +143,7 @@
       - xarchiver
       - zip
     state: present
-    
+
 - name: Copy lightdm scripts
   copy:
     src: "{{ item }}"
