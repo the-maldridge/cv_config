@@ -1,4 +1,0 @@
-*filter
--A INPUT -p udp -s 192.168.42.0/24 --dport 69 -j ACCEPT
--A OUTPUT -p udp -d 192.168.42.0/24 -j ACCEPT
-COMMIT

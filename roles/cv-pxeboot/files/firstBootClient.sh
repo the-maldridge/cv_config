@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # Wait until we can talk to the repo
@@ -18,7 +17,7 @@ xbps-install -R http://repo.collegiumv.org/current -y ansible git-all python-pip
 pip install netaddr
 
 # Attempt to run the main ansible installer
-ansible-pull -U https://github.com/collegiumv/cv_config.git -C split-client workstation.yml
+ansible-pull --accept-host-key -U https://github.com/collegiumv/cv_config.git workstation.yml
 
 # Remove the firstboot script
 rm -rf /etc/sv/firstboot

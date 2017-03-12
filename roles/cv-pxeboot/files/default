@@ -23,7 +23,7 @@ MENU COLOR sel          * #ffffffff #FF5255FF *
 LABEL linux
 MENU LABEL Single Disk Endpoints
 KERNEL vmlinuz
-APPEND initrd=initrd root=/dev/null auto autourl=http://preseed.collegiumv.org/autoinstall.cfg loglevel=4 vconsole.unicode=1 vconsole.keymap=us locale.LANG=en_US.UTF-8 
+APPEND initrd=initrd root=/dev/null auto autourl=http://preseed.collegiumv.org/autoinstall.cfg loglevel=4 vconsole.unicode=1 vconsole.keymap=us locale.LANG=en_US.UTF-8
 
 Label linux-zfs
 MENU LABEL Fileservers

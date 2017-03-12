@@ -1,0 +1,37 @@
+---
+- name: Copy Void Archive
+  copy:
+    src: netboot.tar.gz
+    dest: /srv/tftpboot/netboot.tar.gz
+    owner: root
+    group: wheel
+    mode: 0644
+
+
+- name: Expand Void Archive
+  command: tar xvzf /srv/tftpboot/netboot.tar.gz -C /srv/tftpboot
+  args:
+    creates: /srv/tftpboot/pxelinux.0
+
+- name: Copy PXE-Boot Menu
+  copy:
+    src: default
+    dest: /srv/tftpboot/pxelinux.cfg/default
+    owner: root
+    group: wheel
+    mode: 0644
+
+- name: Copy AutoInstall Config Files
+  copy:
+    src: "{{ item }}"
+    dest: /var/www/htdocs/preseed/{{ item }}
+    owner: root
+    group: wheel
+    mode: 0644
+  with_items:
+    - void.site
+    - fileserver.site
+    - autoinstall.cfg
+    - fileserver.cfg
+    - firstBootClient.sh
+    - firstbootFileserver.sh

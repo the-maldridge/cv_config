@@ -1,0 +1,428 @@
+---
+sg_pkg_server: mirror.esc7.net
+sg_pkg_path: https://mirror.esc7.net/%m/
+
+sg_globalconf:
+  hostname: "{{ int_hostname }}"
+  default_gateway: 129.110.157.1
+  bootresolvers:
+    - 10.182.70.107
+    - 10.182.70.24
+    - 10.180.15.160
+    - 10.180.14.69
+  boothosts:
+    - { name: madhax.net, ip: 209.236.123.144 }
+    - { name: mirror.esc7.net, ip: 72.53.191.10 }
+    - { name: navobs1.wustl.edu, ip: 128.252.19.1 }
+    - { name: ntp.okstate.edu, ip: 139.78.135.14 }
+    - { name: omgpwned.net, ip: 76.185.189.253 }
+    - { name: repo3.voidlinux.eu, ip: 69.197.177.66 }
+    - { name: smtp.utdallas.edu, ip: 10.180.15.187 }
+    - { name: smtp.utdallas.edu, ip: 10.180.15.188 }
+    - { name: smtp.utdallas.edu, ip: 10.182.70.205 }
+    - { name: smtp.utdallas.edu, ip: 10.182.70.208 }
+    - { name: tick.uh.edu, ip: 129.7.1.66 }
+  ssh:
+    permit_password: false
+    listen_egress: false
+  pf:
+    block_policy: drop
+  dhcp:
+    synclisten: em4
+    synctarget: em4
+  dns:
+    SOA: 201702091
+    stubzones:
+      - name: utdallas.edu
+        private: true
+        cidr: 10.0.0.0/8
+        arpa: 10.in-addr.arpa
+        addresses:
+          - 10.182.70.107
+          - 10.182.70.24
+          - 10.180.15.160
+          - 10.180.14.69
+  ntp:
+    clocks:
+      - tick.uh.edu
+      - ntp.okstate.edu
+      - navobs1.wustl.edu
+      - omgpwned.net
+
+sg_networks:
+  - name: cv-proper
+    desc: Internal network for department owned devices
+    cidr: 192.168.42.0/24
+    arpa: 168.192.in-addr.arpa
+    attach_to: carp0
+    domain: collegiumv.org
+    services:
+      - ssh
+      - dhcp
+      - dns
+      - ntp
+      - nat
+      - pxeboot
+    serviceconf:
+      dhcp:
+        dns: 192.168.42.3
+        ntp: 192.168.42.3
+        pxeboot_fname: pxelinux.0
+        pxeboot_next: 192.168.42.3
+        routers: 192.168.42.3
+        allow_unknown: false
+      dns:
+        adminmail: cvadmins.utdallas.edu
+        authname: hydrogen.collegiumv.org
+        domain_address: 192.168.42.7
+        nameservers:
+          - hydrogen.collegiumv.org
+          - helium.collegiumv.org
+      nat:
+        nat_to: carp1
+        mode: manual
+        autonat:
+          - 192.168.42.20/30
+          - 192.168.42.32/27
+          - 192.168.42.224/27
+    hosts: "{{ cv_hosts }}"
+  - name: cv-byod
+    desc: Internal network for personal devices
+    cidr: 192.168.44.0/24
+    arpa: 168.192.in-addr.arpa
+    attach_to: carp3
+    domain: byod.collegiumv.org
+    services:
+      - dhcp
+      - dns
+      - nat
+    serviceconf:
+      dhcp:
+        dns: 192.168.44.3
+        ntp: 192.168.44.3
+        pools:
+          - 192.168.44.64/26
+          - 192.168.44.128/25
+        routers: 192.168.44.3
+        allow_unknown: true
+      dns:
+        adminmail: cvadmins.utdallas.edu
+        authname: hydrogen.collegiumv.org
+        domain_address: 192.168.42.7
+        nameservers:
+          - hydrogen.collegiumv.org
+          - helium.collegiumv.org
+      nat:
+        nat_to: carp1
+        mode: dhcp
+
+sg_interfaces:
+  - name: em0
+    desc: External UTD Network
+    address: "{{ gw_external_real }}"
+  - name: em1
+    desc: Internal CV Network
+    address: "{{ gw_internal_real }}"
+    aliases: "{{ gw_internal_alias }}"
+  - name: em4
+    desc: Intergateway Network
+    address: "{{ gw_secure_ip }}"
+  - name: carp0
+    desc: Internal virtual routing interface
+    address: "{{ gw_carp0 }}"
+    vhid: 1
+    advskew: "{{ gw_carp_advskew }}"
+    carpdev: em1
+  - name: carp1
+    desc: External origin address for NAT traffic
+    address: "{{ gw_carp1 }}"
+    vhid: 2
+    advskew: "{{ gw_carp_advskew }}"
+    carpdev: em0
+  - name: carp2
+    desc: External address for inbound traffic
+    address: "{{ gw_carp2 }}"
+    vhid: 3
+    advskew: "{{ gw_carp_advskew }}"
+    carpdev: em0
+  - name: carp3
+    desc: BYOD virtual routing interface
+    address: "{{ gw_carp3 }}"
+    vhid: 4
+    advskew: "{{ gw_carp_advskew }}"
+    carpdev: em1
+  - name: pfsync0
+    desc: Firewall syncronization interface
+    syncdev: em4
+
+cv_hosts:
+  - name: hydrogen
+    desc: Primary Gateway
+    mac: 00:15:17:7b:45:11
+    addr: 192.168.42.1
+    dns:
+      CNAME:
+        - h
+    pf:
+      out:
+        - proto: tcp
+          dest: mirror.esc7.net
+          port: 443
+  - name: helium
+    desc: Secondary Gateway
+    mac: 00:15:17:7e:0c:c4
+    addr: 192.168.42.2
+    dns:
+      CNAME:
+        - he
+    pf:
+      out:
+        - proto: tcp
+          dest: mirror.esc7.net
+          port: 443
+  - name: lithium
+    desc: Virtual Gateway
+    mac: 00:00:5e:00:01:01
+    addr: 192.168.42.3
+    dns:
+      CNAME:
+        - li
+        - dns
+        - ntp
+        - preseed
+  - name: beryllium
+    desc: Primary Domain Controller
+    mac: a4:1f:72:80:82:fa
+    addr: 192.168.42.4
+    dns:
+      A:
+        - ldap
+      CNAME:
+        - be
+  - name: boron
+    desc: Secondary Domain Controller
+    mac: a4:1f:72:80:4c:b9
+    addr: 192.168.42.5
+    dns:
+      A:
+        - ldap
+      CNAME:
+        - b
+  - name: carbon
+    desc: SSH Box
+    mac: 00:22:19:23:a1:e5
+    addr: 192.168.42.6
+    dns:
+      CNAME:
+        - c
+    pf:
+      in:
+        - proto: tcp
+          src: any
+          to: carp1
+          port: 22
+        - proto: udp
+          src: any
+          to: carp1
+          port: 60001:60999
+      out:
+        - proto: tcp
+          dest: any
+          port: "{80 443 5222 6667 6697}"
+  - name: nitrogen
+    desc: Utility Server
+    mac: 00:10:18:3d:7d:eb
+    addr: 192.168.42.7
+    dns:
+      CNAME:
+        - n
+        - account
+        - accounts
+        - constellation
+        - irc
+        - ldap-api
+        - doc
+        - paper
+        - pasta
+        - pkgs
+        - repo
+        - welcome
+        - www
+    pf:
+      in:
+        - proto: tcp
+          src: any
+          to: carp2
+          port: "{22 80 443 6667 6697 7070 8080}"
+      out:
+        - proto: tcp
+          dest: madhax.net
+          port: 7700
+        - proto: tcp
+          dest: smtp.utdallas.edu
+          port: 25
+        - proto: tcp
+          dest: any
+          port: "{80 443}"
+        - proto: tcp
+          dest: repo3.voidlinux.eu
+          port: 873
+  - name: oxygen
+    desc: Reserved for future use
+    mac: 00:22:19:27:e2:d5
+    addr: 192.168.42.8
+    dns:
+      CNAME:
+        - o
+  - name: fluorine
+    desc: Audio Server
+    mac: 00:1d:09:77:ca:8b
+    addr: 192.168.42.9
+    dns:
+      CNAME:
+        - f
+    pf:
+      out:
+        - proto: tcp
+          dest: any
+          port: "{80 443}"
+  - name: neon
+    desc: General Purpose Video Frontend
+    mac: b8:27:eb:71:3b:98
+    addr: 192.168.42.10
+    dns:
+      CNAME:
+        - ne
+        - fireplace0
+  - name: sodium
+    desc: Print Server
+    mac: 00:22:19:24:4b:1f
+    addr: 192.168.42.11
+    dns:
+      CNAME:
+        - na
+    pf:
+      out:
+        - proto: tcp
+          dest: any
+          port: "{80 443}"
+  - name: aluminium
+    desc: Primary Fileserver
+    mac: d0:50:99:27:89:7c
+    addr: 192.168.42.13
+    dns:
+      CNAME:
+        - al
+        - nfs
+  - name: silicon
+    desc: Secondary Fileserver
+    mac: 6c:62:6d:40:a1:ba
+    addr: 192.168.42.14
+    dns:
+      CNAME:
+        - si
+  - name: phosphorus
+    desc: Test Server
+    mac: 00:1d:09:77:da:52
+    addr: 192.168.42.15
+    dns:
+      CNAME:
+        - p
+    pf:
+      out:
+        - proto: "{tcp udp}"
+          dest: any
+          port: any
+  - name: franklin
+    mac: a0:b3:cc:a0:c9:6b
+    addr: 192.168.42.16
+  - name: gutenburg
+    mac: 70:5a:0f:a6:9b:be
+    addr: 192.168.42.17
+  - name: koster
+    mac: 70:5a:0f:a6:bb:11
+    addr: 192.168.42.18
+  - name: rivest
+    mac: d4:ae:52:be:a0:7d
+    addr: 192.168.42.20
+  - name: shamir
+    mac: 00:1d:09:77:da:f9
+    addr: 192.168.42.21
+  - name: adleman
+    mac: bc:30:5b:e1:b1:12
+    addr: 192.168.42.22
+  - name: cocks
+    mac: 00:1d:09:77:ca:7a
+    addr: 192.168.42.23
+  - name: argus
+    mac: d4:be:d9:bf:54:66
+    addr: 192.168.42.32
+  - name: busterjangle
+    mac: d4:be:d9:bf:34:cd
+    addr: 192.168.42.33
+  - name: crossroads
+    mac: d4:be:d9:bf:35:b5
+    addr: 192.168.42.34
+  - name: dominic
+    mac: d4:be:d9:bf:34:90
+    addr: 192.168.42.35
+  - name: emery
+    mac: d4:be:d9:bf:32:b3
+    addr: 192.168.42.36
+  - name: flintlock
+    mac: d4:be:d9:bf:56:7e
+    addr: 192.168.42.37
+  - name: greenhouse
+    mac: d4:be:d9:bf:34:c3
+    addr: 192.168.42.38
+  - name: hardtack
+    mac: 10:dd:b1:9c:e0:fb
+    addr: 192.168.42.39
+  - name: ivy
+    mac: 38:60:77:30:68:14
+    addr: 192.168.42.40
+  - name: julin
+    mac: 38:60:77:30:69:60
+    addr: 192.168.42.41
+  - name: kittens
+    mac: 38:60:77:30:66:d1
+    addr: 192.168.42.42
+  - name: latchkey
+    mac: 38:60:77:30:69:3f
+    addr: 192.168.42.43
+  - name: mandrel
+    mac: 38:60:77:30:63:92
+    addr: 192.168.42.44
+  - name: niblick
+    mac: bc:5f:f4:cb:10:be
+    addr: 192.168.42.45
+  - name: oberon
+    mac: bc:5f:f4:cb:10:71
+    addr: 192.168.42.46
+  - name: phalanx
+    mac: 00:23:df:fe:ac:82
+    addr: 192.168.42.47
+  - name: quicksilver
+    mac: b0:83:fe:8e:56:83
+    addr: 192.168.42.48
+  - name: redwing
+    mac: b0:83:fe:8e:ba:bb
+    addr: 192.168.42.49
+  - name: sunbeam
+    mac: b0:83:fe:8e:ba:b7
+    addr: 192.168.42.50
+  - name: touchstone
+    mac: b0:83:fe:8e:c1:5b
+    addr: 192.168.42.51
+  - name: unicorn
+    mac: b0:83:fe:8e:c1:70
+    addr: 192.168.42.52
+  - name: vixen
+    mac: b0:83:fe:8e:c1:5c
+    addr: 192.168.42.53
+  - name: wigwam
+    mac: b0:83:fe:8e:ba:c0
+    addr: 192.168.42.54
+  - name: maldridge-1
+    mac: 54:ab:3a:4c:8c:7e
+    addr: 192.168.42.245

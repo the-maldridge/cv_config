@@ -1,3 +1,0 @@
-*filter
--A OUTPUT -p udp --dport 40000 -j ACCEPT
-COMMIT

@@ -1,7 +1,18 @@
 ---
 - hosts: gateway
+  gather_facts: no
   serial: 1
-  become: yes
-  become_method: sudo
   roles:
-    - openbsd
+    - sg-ansible-setup
+
+- hosts: gateway
+  become: yes
+  become_method: doas
+  serial: 1
+  roles:
+    - sg-dhcp
+    - sg-dns
+    - sg-ntp
+    - sg-pxeboot
+    - sg-wol
+    - cv-pxeboot

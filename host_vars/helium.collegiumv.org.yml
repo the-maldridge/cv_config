@@ -1,7 +1,14 @@
 ---
-name: helium.collegiumv.org
-external_ip: 129.110.157.12
-internal_ip: 192.168.42.2
-peer_internal_ip: 192.168.42.1
-pf_ip: 172.16.0.2
-advskew: 20
+int_hostname: helium.collegiumv.org
+
+gw_external_real: 129.110.157.12/24
+gw_internal_real: 192.168.42.2/24
+gw_internal_alias:
+  - 192.168.44.2/24
+gw_secure_ip: 172.16.0.2/24
+
+gw_carp0: 192.168.42.3/24
+gw_carp1: 129.110.157.13/24
+gw_carp2: 129.110.157.14/24
+gw_carp3: 192.168.44.3/24
+gw_carp_advskew: 20
