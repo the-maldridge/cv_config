@@ -16,3 +16,4 @@
     - sg-pxeboot
     - sg-wol
     - cv-pxeboot
+    - byod-dhcp

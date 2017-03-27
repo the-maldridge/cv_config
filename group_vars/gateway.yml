@@ -11,6 +11,7 @@ sg_globalconf:
     - 10.180.15.160
     - 10.180.14.69
   boothosts:
+    - { name: constellation.collegiumv.org, ip: 192.168.42.7 }
     - { name: madhax.net, ip: 209.236.123.144 }
     - { name: mirror.esc7.net, ip: 72.53.191.10 }
     - { name: navobs1.wustl.edu, ip: 128.252.19.1 }
@@ -104,7 +105,7 @@ sg_networks:
           - 192.168.44.64/26
           - 192.168.44.128/25
         routers: 192.168.44.3
-        allow_unknown: true
+        allow_unknown: false
       dns:
         adminmail: cvadmins.utdallas.edu
         authname: hydrogen.collegiumv.org

@@ -4,3 +4,5 @@ constellation_dbpassword: "{{ lookup('file', 'secret/constellation_dbpassword') 
 ConstellationApps:
   - name: Constellation-OrderBoard
     mountpoint: orderboard/
+  - name: Constellation-DeviceManager
+    mountpoint: devices/
