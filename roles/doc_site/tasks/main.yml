@@ -1,39 +1,64 @@
 ---
 - name: Install dependencies
-  xbps: name={{ item }} state=present
-  with_items:
-    - python-pip
-    - git-all
+  xbps:
+    pkg:
+      - python-pip
+      - git-all
+    state: present
 
 - name: Install firewall rules
-  copy: src=cvdoc.rules dest=/etc/iptables.d/cvdoc.rules owner=root group=root mode=0640
+  copy:
+    src: cvdoc.rules
+    dest: /etc/iptables.d/cvdoc.rules
+    owner: root
+    group: root
+    mode: 0640
   notify:
     - iptables
 
 - name: Install mkdocs
-  pip: name=mkdocs state=present
-
-- name: Remove old site files
-  file: path=/tmp/doc_site state=absent
-
-- name: Get Site Files
-  git: clone=yes depth=1 force=yes dest=/tmp/doc_site repo=https://github.com/collegiumv/cv_doc.git
+  pip:
+    name: mkdocs
+    state: present
 
 - name: Create site folder
-  file: path=/var/www/cvdoc state=directory owner=root group=root mode=0755
+  file:
+    path: /var/www/cvdoc
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
 
-- name: Build documentation
-  command: mkdocs build -cd /var/www/cvdoc chdir=/tmp/doc_site
+- name: Install mkdocs_build.sh
+  template:
+    src: mkdocs_build.sh
+    dest: /usr/local/sbin/mkdocs-build-{{ mkdocs_site_name }}
+    owner: root
+    group: root
+    mode: 0755
 
-- name: Fix Site permissions
-  file: path=/var/www/cvdoc owner=root group=nginx mode=og+rX recurse=yes
+- name: Install mkdocs cronjob
+  template:
+    src: mkdocs_build.cron
+    dest: /etc/cron.d/mkdocs_build
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Copy Site descriptor
-  copy: src=cvdoc.conf dest=/etc/nginx/sites-available/cvdoc.conf owner=root group=root mode=0644
+  copy:
+    src: cvdoc.conf
+    dest: /etc/nginx/sites-available/cvdoc.conf
+    owner: root
+    group: root
+    mode: 0644
   notify:
     - nginx
 
 - name: Enable Site
-  file: src=../sites-available/cvdoc.conf dest=/etc/nginx/sites-enabled/cvdoc.conf state=link owner=root group=root
+  file:
+    src: ../sites-available/cvdoc.conf
+    dest: /etc/nginx/sites-enabled/cvdoc.conf
+    state: link
   notify:
     - nginx
