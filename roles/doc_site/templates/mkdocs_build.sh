@@ -31,4 +31,4 @@ mkdocs build
 rsync -a site/ "$MKDOCS_SERVE_PATH"
 
 # Fix the system permissions
-chmod og+rX "$MKDOCS_SERVE_PATH"
+chmod -R og+rX "$MKDOCS_SERVE_PATH"
