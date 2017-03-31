@@ -9,6 +9,9 @@ acmetool:
     - site: constellation.collegiumv.org
       names:
         - constellation.collegiumv.org
+    - site: paper.collegiumv.org
+      names:
+        - paper.collegiumv.org
   hostmaster_email: cvadmins@utdallas.edu
 
 constellation_certificate_path: /var/lib/acme/live/constellation.collegiumv.org/fullchain

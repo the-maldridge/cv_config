@@ -6,7 +6,6 @@ SECRET_TARGETS = ${PLAIN_SECRETS} \
 	constellation_cert \
 	inspircd_cert \
 	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers \
-	paper_cert
 
 PLAIN_SECRETS = account_salt \
 	constellation_dbpassword \
@@ -102,6 +101,3 @@ inspircd_inspircd_power_restartpass:
 
 inspircd_opers:
 	./inspircd_opers > ${SECRETS_DIR}/inspircd_opers.yml
-
-paper_cert:
-	${MAKE} role=papercut fqdn=paper.collegiumv.org certreq
