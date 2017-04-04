@@ -44,7 +44,7 @@ def templateMacs(macs, fpath):
     templateStr = "{% for device in devices %}host {{ device.hostname }} { hardware ethernet {{ device.MAC }}; } # Device: '{{ device.name }}'; Owned By: {{ device.owner}}\n{% endfor %}" # noqa 401
 
     template = Template(templateStr)
-    conf = template.render({"devices": macs})
+    conf = template.render({"devices": macs}).encode("utf8")
 
     with open(fpath, 'w') as f:
         f.write(conf)

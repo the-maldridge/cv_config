@@ -355,6 +355,15 @@ cv_hosts:
   - name: cocks
     mac: 00:1d:09:77:ca:7a
     addr: 192.168.42.23
+  - name: f400san
+    mac: 00:00:00:00:00:00
+    addr: 192.168.42.24
+  - name: unifi
+    mac: f0:9f:c2:15:30:38
+    addr: 192.168.42.25
+  - name: unifi-donut
+    mac: 80:2a:a8:96:2d:a2
+    addr: 192.168.42.26
   - name: argus
     mac: d4:be:d9:bf:54:66
     addr: 192.168.42.32
