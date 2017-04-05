@@ -116,6 +116,8 @@ sg_networks:
       nat:
         nat_to: carp1
         mode: dhcp
+        autonat:
+          - 192.168.44.0/24
 
 sg_interfaces:
   - name: em0
@@ -436,3 +438,6 @@ cv_hosts:
   - name: maldridge-1
     mac: 54:ab:3a:4c:8c:7e
     addr: 192.168.42.245
+  - name: maldridge-2
+    mac: 4c:eb:42:d9:da:e6
+    addr: 192.168.42.246
