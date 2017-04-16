@@ -1,0 +1,3 @@
+---
+papercut_site_certificate_path: /var/lib/acme/live/paper.collegiumv.org/fullchain
+papercut_site_keyfile_path: /var/lib/acme/live/paper.collegiumv.org/privkey

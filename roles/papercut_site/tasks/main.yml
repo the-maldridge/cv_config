@@ -1,6 +1,6 @@
 ---
 - name: Add PaperCut Site
-  copy:
+  template:
     src: paper.conf
     dest: /etc/nginx/sites-available/paper.conf
     owner: root
