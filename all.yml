@@ -7,3 +7,4 @@
 - include: nas.yml
 - include: printserver.yml
 - include: workstation.yml
+- include: kiosk.yml

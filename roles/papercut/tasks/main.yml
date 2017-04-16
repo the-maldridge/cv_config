@@ -39,8 +39,8 @@
 
 - name: Install PaperCut
   command: ./install chdir=/home/papercut/papercut
-  sudo: yes
-  sudo_user: papercut
+  become: yes
+  become_user: papercut
   when: install.changed
 
 - name: Remove PaperCut installer
