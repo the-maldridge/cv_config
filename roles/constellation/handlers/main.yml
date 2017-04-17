@@ -5,7 +5,6 @@
 
 - name: constellation_collectstatic
   command: /opt/constellation/scripts/do_collectstatic
-  become_user: constellation
 
 - name: constellation
   command: sv restart constellation

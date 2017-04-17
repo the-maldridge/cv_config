@@ -6,3 +6,5 @@ ConstellationApps:
     mountpoint: orderboard/
   - name: Constellation-DeviceManager
     mountpoint: devices/
+  - name: Constellation-Vote
+    mountpoint: vote/
