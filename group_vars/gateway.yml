@@ -232,6 +232,8 @@ cv_hosts:
         - proto: tcp
           dest: any
           port: "{80 443 5222 6667 6697}"
+    visible_to:
+      - cv-byod
   - name: nitrogen
     desc: Utility Server
     mac: 00:10:18:3d:7d:eb
@@ -270,6 +272,8 @@ cv_hosts:
         - proto: tcp
           dest: repo3.voidlinux.eu
           port: 873
+    visible_to:
+      - cv-byod
   - name: oxygen
     desc: Reserved for future use
     mac: 00:22:19:27:e2:d5
@@ -309,6 +313,8 @@ cv_hosts:
         - proto: tcp
           dest: any
           port: "{80 443}"
+    visible_to:
+      - cv-byod
   - name: aluminium
     desc: Primary Fileserver
     mac: d0:50:99:27:89:7c
