@@ -5,3 +5,7 @@ monitor_UPS:
     host: nitrogen.collegiumv.org
     power_factor: 1
     mode: slave
+
+cups_nets:
+  - 192.168.42.0/24
+  - 192.168.44.0/24
