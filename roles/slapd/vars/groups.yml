@@ -63,6 +63,7 @@ slapd_groups:
     - kusoTTK
     - Fhqwhgads
     - dangerontheranger
+    - andrew.s707
 
 - name: Honors College Staff
   gidNumber: 1350
