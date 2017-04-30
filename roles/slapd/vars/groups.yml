@@ -46,16 +46,16 @@ slapd_groups:
 - name: Council
   gidNumber: 1340
   members:
+    - Ali
     - Fhqwhgads
     - Geo130030
-    - Lacie.tn
-    - andrew.s707
+    - Vartika_V
+    - asmohov
     - charibane
+    - charmonium
     - dappiah
-    - fxw130930
-    - halewis
     - maldridge
-    - shayan.monadjemi
+    - sab160230
 
 - name: Media Admins
   gidNumber: 1345
