@@ -70,3 +70,6 @@
 [submodule "roles/sg-ansible-setup"]
 	path = roles/sg-ansible-setup
 	url = https://github.com/SimpleGateway/sg-ansible-setup
+[submodule "roles/mosh"]
+	path = roles/mosh
+	url = https://github.com/void-ansible-roles/mosh.git
