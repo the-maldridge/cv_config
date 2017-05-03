@@ -1,6 +1,0 @@
----
-- name: Install ansible
-  xbps: pkg=ansible state=present
-
-- name: Add ansible-pull cron job
-  copy: src=crontab dest=/etc/cron.d/pull owner=root group=root mode=0644

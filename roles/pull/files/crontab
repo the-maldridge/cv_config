@@ -1,1 +1,0 @@
-@reboot           root  ansible-pull -U https://github.com/collegiumv/cv_config.git -o >/var/log/ansible-pull.log 2>&1
