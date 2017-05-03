@@ -1,3 +1,0 @@
-[nutnet]
-password={{ nut_monitor_passwd | hash('md5') }}
-upsmon master

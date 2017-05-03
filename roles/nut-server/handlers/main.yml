@@ -1,6 +1,0 @@
----
-- name: upsd
-  command: sv restart upsd
-
-- name: upsdrvctl
-  command: sv restart upsdrvctl
