@@ -1,0 +1,3 @@
+dependencies:
+  - { role: sg-base }
+  - { role: sg-dhcp }
