@@ -85,3 +85,6 @@
 [submodule "roles/upsmon"]
 	path = roles/upsmon
 	url = https://github.com/void-ansible-roles/upsmon.git
+[submodule "roles/nginx"]
+	path = roles/nginx
+	url = https://github.com/void-ansible-roles/nginx.git
