@@ -1,3 +1,6 @@
 ---
 dependencies:
   - { role: nginx }
+  - { role: network }
+  - { role: krb5_conf }
+  - { role: nslcd }
