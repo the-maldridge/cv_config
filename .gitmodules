@@ -82,3 +82,6 @@
 [submodule "roles/nut-server"]
 	path = roles/nut-server
 	url = https://github.com/void-ansible-roles/nut-server.git
+[submodule "roles/upsmon"]
+	path = roles/upsmon
+	url = https://github.com/void-ansible-roles/upsmon.git

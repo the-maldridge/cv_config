@@ -1,3 +1,0 @@
----
-- name: upsmon
-  command: upsmon -c reload
