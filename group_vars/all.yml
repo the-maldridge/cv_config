@@ -1,0 +1,10 @@
+---
+network_interfaces:
+    - name: default
+      mode: static
+      mode6: disabled
+      resolvermode: static
+      routers:
+        - 192.168.42.3
+      resolvers:
+        - 192.168.42.3

@@ -73,3 +73,6 @@
 [submodule "roles/mosh"]
 	path = roles/mosh
 	url = https://github.com/void-ansible-roles/mosh.git
+[submodule "roles/network"]
+	path = roles/network
+	url = https://github.com/void-ansible-roles/network.git
