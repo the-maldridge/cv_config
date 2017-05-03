@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: network }
+  - { role: netlogon }
+  - { role: mosh }
