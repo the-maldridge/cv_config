@@ -76,3 +76,6 @@
 [submodule "roles/network"]
 	path = roles/network
 	url = https://github.com/void-ansible-roles/network.git
+[submodule "roles/sshd"]
+	path = roles/sshd
+	url = https://github.com/void-ansible-roles/sshd.git

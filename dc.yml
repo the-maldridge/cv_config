@@ -8,6 +8,7 @@
     - xbps-repoconf
     - network
     - sshd
+    - cv-netkeys
     - core-daemons
     - core-programs
     - slapd

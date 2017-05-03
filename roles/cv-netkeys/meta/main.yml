@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: sshd }
+  - { role: ldap_conf }
+  - { role: netlogon }

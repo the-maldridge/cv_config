@@ -1,0 +1,13 @@
+---
+- name: Install openldap
+  xbps:
+    pkg: openldap
+    state: present
+
+- name: Install ssh_pubkeys command
+  copy:
+    src: ssh_pubkeys
+    dest: /usr/local/sbin/ssh_pubkeys
+    owner: root
+    group: root
+    mode: 0755

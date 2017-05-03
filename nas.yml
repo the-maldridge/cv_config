@@ -8,7 +8,7 @@
     - core-daemons
     - core-programs
     - sshd
-    - nslcd
+    - cv-netkeys
     - nas
     - netlogon
     - upsmon

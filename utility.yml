@@ -8,6 +8,7 @@
     - core-programs
     - core-daemons
     - sshd
+    - cv-netkeys
     - inspircd
     - acmetool
     - account_site

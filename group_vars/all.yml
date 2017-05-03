@@ -8,3 +8,8 @@ network_interfaces:
         - 192.168.42.3
       resolvers:
         - 192.168.42.3
+
+sshd_banner: assets/sshd_banner
+sshd_AuthorizedKeysCommand: /usr/local/sbin/ssh_pubkeys
+sshd_AuthorizedKeysFile: false
+sshd_AllowGroupAlways: Server Admins

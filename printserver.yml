@@ -8,6 +8,7 @@
     - core-daemons
     - core-programs
     - sshd
+    - cv-netkeys
     - papercut
     - netlogon
     - upsmon

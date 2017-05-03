@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: ldap_conf }

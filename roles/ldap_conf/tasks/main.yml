@@ -1,0 +1,15 @@
+- name: Ensure ldap config directory exists
+  file:
+    path: /etc/openldap
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Add default ldap.conf
+  copy:
+    src: ldap.conf
+    dest: /etc/openldap/ldap.conf
+    owner: root
+    group: root
+    mode: 0644

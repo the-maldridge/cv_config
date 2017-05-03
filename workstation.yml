@@ -2,6 +2,7 @@
 - hosts: workstation:mediaboxen
   roles:
     - sshd
+    - cv-netkeys
     - netlogon
     - netdata
     - workstation
