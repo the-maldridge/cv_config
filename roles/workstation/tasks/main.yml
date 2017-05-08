@@ -11,8 +11,11 @@
 - name: Install graphics libraries
   xbps:
     pkg:
+      - glu-32bit
+      - libGL-32bit
       - libXrandr-32bit
       - libXt-32bit
+      - libXxf86vm-32bit
       - mesa-ati-dri-32bit
       - mesa-intel-dri-32bit
     state: present
@@ -66,7 +69,7 @@
     state: present
 
 - name: Install media playback programs
-  xbps: 
+  xbps:
     pkg:
       - audacity
       - alsa-lib
@@ -78,7 +81,7 @@
     state: present
 
 - name: Install Web Browsers
-  xbps: 
+  xbps:
     pkg:
       - chromium
       - firefox
@@ -87,7 +90,7 @@
     state: present
 
 - name: Install Scanner programs
-  xbps: 
+  xbps:
     pkg:
       - simple-scan
       - sane
@@ -98,7 +101,7 @@
     state: present
 
 - name: Install additional misc. programs
-  xbps: 
+  xbps:
     pkg:
       - evince
       - feh
@@ -140,6 +143,11 @@
       - unzip
       - xarchiver
       - zip
+    state: present
+
+- name: Install gnutls-32bit
+  xbps:
+    pkg: gnutls-32bit
     state: present
 
 - name: Copy lightdm scripts
