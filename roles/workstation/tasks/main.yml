@@ -11,8 +11,6 @@
 - name: Install graphics libraries
   xbps:
     pkg:
-      - glu-32bit
-      - libGL-32bit
       - libXrandr-32bit
       - libXt-32bit
       - libXxf86vm-32bit
