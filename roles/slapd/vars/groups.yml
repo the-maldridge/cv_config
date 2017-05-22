@@ -12,6 +12,7 @@ slapd_groups:
     - kjh061000
     - MatchesMalone
     - phy1729
+    - maldridge
     - revertTS
     - thechairman
     - vanquish
@@ -28,6 +29,7 @@ slapd_groups:
   members:
     - harpham
     - maldridge
+    - kulinacs
 
 - name: Local Admins
   gidNumber: 9271
@@ -42,6 +44,7 @@ slapd_groups:
     - dinoocch
     - m_wynn
     - phy1729
+    - kulinacs
 
 - name: Council
   gidNumber: 1340
