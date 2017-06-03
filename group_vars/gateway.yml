@@ -441,6 +441,9 @@ cv_hosts:
   - name: wigwam
     mac: b0:83:fe:8e:ba:c0
     addr: 192.168.42.54
+  - name: blu-ray
+    mac: c4:57:6e:e7:26:04
+    addr: 192.168.42.65
   - name: maldridge-1
     mac: 54:ab:3a:4c:8c:7e
     addr: 192.168.42.245
